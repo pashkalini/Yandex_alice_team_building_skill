@@ -115,11 +115,16 @@ def another_activity(event):
 # включает песню, которую знают все
 def play_music(event):
     text = "Включаю, эту песню вы точно знаете!"
-    tts_1 = "<speaker audio=\"dialogs-upload/9298f90d-da88-42dd-bafc-253e0505f2f6/2d3ac5af-13a5-4586-bba2-8522512d8f4a.opus\">"
-    tts_2 = "<speaker audio=\"dialogs-upload/9298f90d-da88-42dd-bafc-253e0505f2f6/9a8114c7-6428-4835-a9c2-8dd3ab41c490.opus\">"
-    tts_3 = "<speaker audio=\"dialogs-upload/9298f90d-da88-42dd-bafc-253e0505f2f6/8e6febcd-0972-4f67-a095-2f622350858e.opus\">"
-    tts_4 = "<speaker audio=\"dialogs-upload/9298f90d-da88-42dd-bafc-253e0505f2f6/6615efee-4ee3-4fb9-863b-35932ec3e5d0.opus\">"
-    tts_5 = "<speaker audio=\"dialogs-upload/9298f90d-da88-42dd-bafc-253e0505f2f6/2c6ce01b-7668-4130-9a84-991db17f6bcd.opus\">"
+    tts_1 = "<speaker audio=\"dialogs-upload/9298f90d-da88-42dd-bafc-253e0505f2f6/2d3ac5af-13a5-4586-bba2" \
+            "-8522512d8f4a.opus\">"
+    tts_2 = "<speaker audio=\"dialogs-upload/9298f90d-da88-42dd-bafc-253e0505f2f6/9a8114c7-6428-4835-a9c2" \
+            "-8dd3ab41c490.opus\">"
+    tts_3 = "<speaker audio=\"dialogs-upload/9298f90d-da88-42dd-bafc-253e0505f2f6/8e6febcd-0972-4f67-a095" \
+            "-2f622350858e.opus\">"
+    tts_4 = "<speaker audio=\"dialogs-upload/9298f90d-da88-42dd-bafc-253e0505f2f6/6615efee-4ee3-4fb9-863b" \
+            "-35932ec3e5d0.opus\">"
+    tts_5 = "<speaker audio=\"dialogs-upload/9298f90d-da88-42dd-bafc-253e0505f2f6/2c6ce01b-7668-4130-9a84" \
+            "-991db17f6bcd.opus\">"
     music_tts = [tts_1, tts_2, tts_3, tts_4, tts_5]
     return make_response(text, text + random.choice(music_tts))
 
@@ -127,9 +132,12 @@ def play_music(event):
 # фоновая музыка
 def bg_music():
     text = "\n\nА чтобы вы про меня не забыли, включу фоновую музыку."
-    tts_1 = "<speaker audio=\"dialogs-upload/9298f90d-da88-42dd-bafc-253e0505f2f6/7ea00568-2068-453f-949f-e03258f55f02.opus\">"
-    tts_2 = "<speaker audio=\"dialogs-upload/9298f90d-da88-42dd-bafc-253e0505f2f6/d851b591-671c-4534-8e53-3dea98483853.opus\">"
-    tts_3 = "<speaker audio=\"dialogs-upload/9298f90d-da88-42dd-bafc-253e0505f2f6/cf64664f-31f7-47d5-92e3-1e3b2cca9576.opus\">"
+    tts_1 = "<speaker audio=\"dialogs-upload/9298f90d-da88-42dd-bafc-253e0505f2f6/7ea00568-2068-453f-949f" \
+            "-e03258f55f02.opus\">"
+    tts_2 = "<speaker audio=\"dialogs-upload/9298f90d-da88-42dd-bafc-253e0505f2f6/d851b591-671c-4534-8e53" \
+            "-3dea98483853.opus\">"
+    tts_3 = "<speaker audio=\"dialogs-upload/9298f90d-da88-42dd-bafc-253e0505f2f6/cf64664f-31f7-47d5-92e3" \
+            "-1e3b2cca9576.opus\">"
     bg_tts = [tts_1, tts_2, tts_3]
     bg = [text, random.choice(bg_tts)]
     return bg
