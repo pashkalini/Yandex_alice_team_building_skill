@@ -1,5 +1,6 @@
 import random
-
+import threading
+import time
 
 # функция для отправки ответа
 def make_response(text, tts=None):
@@ -10,7 +11,6 @@ def make_response(text, tts=None):
         },
         'version': '1.0',
     }
-
 
 # def repeat_message():
 #     with open("text_to_repeat.txt", 'r', encoding='utf8') as f:
@@ -23,20 +23,17 @@ def make_response(text, tts=None):
 #         return
 
 # тексты для перебивок музыки через каждые 2 минуты
-text_18_min = "Первые две минуты прошли. Вечеринка в самом начале, продолжаем набирать обороты!"
-text_16_min = "Еще две минутки закончились. Продолжайте, у вас еще 16 минут."
-text_14_min = "Так так так, осталось 14 минут, Вперед-вперед!"
-text_12_min = "Ку-ку, прошло еще две минут. У вас в запасе еще 12!"
-text_10_min = "Очередные две минуты прошли! Остается - 10, дерзайте!"
-text_8_min = "Прошло две минуты! Надеюсь, вы уже начали знакомиться. Если хотите перейти к следующей активности,\
-скажите \"Дальше\" или можете спросить меня: «‎Что ты умеешь?». А пока продолжаем, у вас еще 8 минут."
-text_6_min = "Прошло еще две минуты! Осталось 6 минут."
-text_4_min = "Больше половины отведенного времени прошло! Если хотите перейти к следующей активности,\
-скажите \"Дальше\" или можете спросить меня: «‎Что ты умеешь?». У вас еще 4 минуты."
-text_2_min = "Такс, ну вот еще две минутки прошли. Пошла последняя двухминуточка, успевайте!"
+# text_18_min = "Первые две минуты прошли. Вечеринка в самом начале, продолжаем набирать обороты!"
+# text_16_min = "Еще две минутки закончились. Продолжайте, у вас еще 16 минут."
+text_14_min = "Первые шесть минут прошли так же быстро, как моя молодость. Но да ладно, продолжаем играть."
+# text_12_min = "Ку-ку, прошло еще две минут. У вас в запасе еще 12!"
+# text_10_min = "Очередные две минуты прошли! Остается - 10, дерзайте!"
+text_8_min = "Вижу, все идет по плану! Но на игру осталось 8 минут."
+# text_6_min = "Прошло еще две минуты! Осталось 6 минут."
+text_4_min = "Кукусики! Смотрю, знакомство в самом разгаре. Поторопитесь узнать друг друга, у вас есть 4 минуты."
+text_2_min = "Такс, осталась всего двухминуточка! Давайте запрыгнем в последний вагон."
 text_fin_1 = "О, оу! Время вышло! Если хотите еще каких-нибудь активностей, можете спросить меня: «‎Что ты умеешь?»"
 text_fin_2 = "Ну всё, время вышло! Хорошо, что познакомились! Если хотите продолжить, можете спросить меня: «‎Что ты умеешь?»"
-
 
 # приветствует пользователя
 def welcome_message(event):
@@ -46,7 +43,6 @@ def welcome_message(event):
     Ну ладно, хоть до вас дошла. Хотите познакомиться поближе или повеселиться?"
     return make_response(text, tts)
 
-
 # обработка ошибки
 def fallback(event):
     response_1 = "Ой, а что вы сказали? Не расслышала."
@@ -55,7 +51,6 @@ def fallback(event):
     responses = [response_1, response_2, response_3]
     random_response = random.choice(responses)
     return make_response(random_response)
-
 
 # Выбирает одну из активностей для знакомства
 def start_meeting_activity(event):
@@ -67,14 +62,13 @@ def start_meeting_activity(event):
     bg_tts_5 = bg[5]
     bg_text = bg[0]
     with open("activity_1.txt", 'r', encoding='utf8') as text_1, \
-            open("activity_2.txt", 'r', encoding='utf8') as text_2, \
-            open("activity_3.txt", 'r', encoding='utf8') as text_3:
+            open ("activity_2.txt", 'r', encoding='utf8') as text_2, \
+            open ("activity_3.txt", 'r', encoding='utf8') as text_3:
         activities = [text_1, text_2, text_3]
         random_text = random.choice(activities)
         activity_text = random_text.read() + bg_text
         return make_response(activity_text, activity_text + bg_tts_1 + text_8_min + \
-                             bg_tts_2 + text_6_min + bg_tts_3 + text_4_min + bg_tts_4 + text_2_min + bg_tts_5 + text_fin_2)
-
+                             bg_tts_2 + bg_tts_3 + text_4_min + bg_tts_4 + text_2_min + bg_tts_5 + text_fin_2)
 
 # выбирает одну из игр
 def start_game(event):
@@ -91,16 +85,15 @@ def start_game(event):
     bg_tts_10 = bg[10]
     bg_text = bg[0]
     with open("game_1.txt", 'r', encoding='utf8') as text_1, \
-            open("game_2.txt", 'r', encoding='utf8') as text_2, \
-            open("game_3.txt", 'r', encoding='utf8') as text_3:
+            open ("game_2.txt", 'r', encoding='utf8') as text_2, \
+            open ("game_3.txt", 'r', encoding='utf8') as text_3:
         games = [text_1, text_2, text_3]
         random_text = random.choice(games)
         game_text = random_text.read() + bg_text
-        return make_response(game_text, game_text + bg_tts_1 + text_18_min + bg_tts_2 + text_16_min + \
-                             bg_tts_3 + text_14_min + bg_tts_4 + text_12_min + bg_tts_5 + \
-                             text_10_min + bg_tts_6 + text_8_min + bg_tts_7 + text_6_min + bg_tts_8 + text_4_min + \
+        return make_response(game_text, game_text + bg_tts_1 + bg_tts_2 + \
+                             bg_tts_3 + text_14_min + bg_tts_4 + bg_tts_5 + \
+                             bg_tts_6 + text_8_min + bg_tts_7 + bg_tts_8 + text_4_min + \
                              bg_tts_9 + text_2_min + bg_tts_10 + text_fin_1)
-
 
 # что ты умеешь
 def what_can_you_do(event):
@@ -112,12 +105,10 @@ def what_can_you_do(event):
             Хотите познакомиться или сыграть в игру?"
     return make_response(text, tts)
 
-
 # помощь (перечисление доступных команд)
 def help(event):
     with open("help_commands.txt", 'r', encoding='utf8') as commands:
         return make_response(commands.read())
-
 
 # выбирает рандомно игру или активность
 def game_vs_activity(event):
@@ -125,7 +116,6 @@ def game_vs_activity(event):
     activity = start_meeting_activity(event)
     random_activity = [activity, game]
     return random.choice(random_activity)
-
 
 # предлагает тему для разговора
 def theme_variants(event):
@@ -151,8 +141,7 @@ def theme_variants(event):
     theme_text = text + random.choice(themes) + text_timer + bg_text
     return make_response(theme_text, \
                          theme_text + bg_tts_1 + text_8_min + bg_tts_2 + \
-                         text_6_min + bg_tts_3 + text_4_min + bg_tts_4 + text_2_min + bg_tts_5 + text_fin_1)
-
+                         bg_tts_3 + text_4_min + bg_tts_4 + text_2_min + bg_tts_5 + text_fin_1)
 
 # обработка команд по типу "дальше", "давай другое"
 def another_activity(event):
@@ -161,7 +150,6 @@ def another_activity(event):
     theme = theme_variants(event)
     random_activity = [activity, game, theme]
     return random.choice(random_activity)
-
 
 # включает песню, которую знают все
 def play_music(event):
@@ -176,28 +164,21 @@ def play_music(event):
     Если хотите продолжить тусовку, спросите: «‎Что ты умеешь?»"
     return make_response(text + "\n\n 🎶 воспроизводится музыка", text + random.choice(music_tts) + next_text)
 
-
 # фоновая музыка
 def bg_music():
     # длительность трека - 2 минуты
     text = "\n\nА чтобы вы про меня не забыли, включу фоновую музыку."
-    tts_1 = "<speaker audio=\"dialogs-upload/9298f90d-da88-42dd-bafc-253e0505f2f6/7ea00568-2068-453f-949f-e03258f55f02.opus\">"
-    tts_2 = "<speaker audio=\"dialogs-upload/9298f90d-da88-42dd-bafc-253e0505f2f6/5a1543b1-4c70-4c00-82da-b2102e307a15.opus\">"
-    tts_3 = "<speaker audio=\"dialogs-upload/9298f90d-da88-42dd-bafc-253e0505f2f6/8cceef7d-4ab5-4d32-993a-7ee117d15881.opus\">"
-    tts_4 = "<speaker audio=\"dialogs-upload/9298f90d-da88-42dd-bafc-253e0505f2f6/c0c15b91-4744-4561-b54b-8fce0fc5dffa.opus\">"
-    tts_5 = "<speaker audio=\"dialogs-upload/9298f90d-da88-42dd-bafc-253e0505f2f6/2260fe71-abf5-4a5c-9175-0f41751b903c.opus\">"
-    tts_6 = "<speaker audio=\"dialogs-upload/9298f90d-da88-42dd-bafc-253e0505f2f6/4aaf4efc-ac5a-4a74-a98b-2ab6e2db7ee4.opus\">"
-    tts_7 = "<speaker audio=\"dialogs-upload/9298f90d-da88-42dd-bafc-253e0505f2f6/9446b849-a407-4f78-ab7d-cc6fc9f84935.opus\">"
-    tts_8 = "<speaker audio=\"dialogs-upload/9298f90d-da88-42dd-bafc-253e0505f2f6/8eafbf56-cb54-4288-8646-6a79f3b27546.opus\">"
-    tts_9 = "<speaker audio=\"dialogs-upload/9298f90d-da88-42dd-bafc-253e0505f2f6/79db73ad-67b1-4377-a7b3-b843a649c067.opus\">"
-    bg_tts = [tts_1, tts_2, tts_3, tts_4, tts_5, tts_6, tts_7, tts_8, tts_9]
+    tts_1 = "<speaker audio=\"dialogs-upload/9298f90d-da88-42dd-bafc-253e0505f2f6/c0c15b91-4744-4561-b54b-8fce0fc5dffa.opus\">"
+    tts_2 = "<speaker audio=\"dialogs-upload/9298f90d-da88-42dd-bafc-253e0505f2f6/2260fe71-abf5-4a5c-9175-0f41751b903c.opus\">"
+    tts_3 = "<speaker audio=\"dialogs-upload/9298f90d-da88-42dd-bafc-253e0505f2f6/4aaf4efc-ac5a-4a74-a98b-2ab6e2db7ee4.opus\">"
+    tts_4 = "<speaker audio=\"dialogs-upload/9298f90d-da88-42dd-bafc-253e0505f2f6/9446b849-a407-4f78-ab7d-cc6fc9f84935.opus\">"
+    tts_5 = "<speaker audio=\"dialogs-upload/9298f90d-da88-42dd-bafc-253e0505f2f6/8eafbf56-cb54-4288-8646-6a79f3b27546.opus\">"
+    tts_6 = "<speaker audio=\"dialogs-upload/9298f90d-da88-42dd-bafc-253e0505f2f6/79db73ad-67b1-4377-a7b3-b843a649c067.opus\">"
+    bg_tts = [tts_1, tts_2, tts_3, tts_4, tts_5, tts_6]
     # выбираем 10 рандомных фоновых песен для чередования
-    bg = [text, random.choice(bg_tts), random.choice(bg_tts), random.choice(bg_tts), random.choice(bg_tts),
-          random.choice(bg_tts), \
-          random.choice(bg_tts), random.choice(bg_tts), random.choice(bg_tts), random.choice(bg_tts),
-          random.choice(bg_tts)]
+    bg = [text, random.choice(bg_tts), random.choice(bg_tts), random.choice(bg_tts), random.choice(bg_tts), random.choice(bg_tts), \
+          random.choice(bg_tts), random.choice(bg_tts), random.choice(bg_tts), random.choice(bg_tts), random.choice(bg_tts)]
     return bg
-
 
 # основной обработчик сценариев
 def handler(event, context):
