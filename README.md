@@ -1,4 +1,6 @@
 # Навык для голосового помощника "Алиса" от Яндекса - "После пар"
+<iframe width="768" height="432" src="https://miro.com/app/live-embed/uXjVMe_qLrk=/?moveToViewport=-2426,-2064,2248,1265&embedId=31995590588" frameborder="0" scrolling="no" allow="fullscreen; clipboard-read; clipboard-write" allowfullscreen></iframe>
+
 <img width="1246" alt="image" src="https://user-images.githubusercontent.com/51087816/225142762-e0b24280-88b7-4102-bc0c-600fd457783c.png">
 Навык помогает студентам познакомиться друг с другом и построить более тесные связи, объединить группу. Алиса включается в компанию студентов и берет инициативу знакомства и развлечения на себя. Предлагает активности и игры для знакомства, а также темы для общения.
 
