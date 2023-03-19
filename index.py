@@ -151,16 +151,17 @@ def another_activity(event):
     random_activity = [activity, game, theme]
     return random.choice(random_activity)
 
-# обход сценария - "включись в тусовку"
+# NEW обход сценария - "включись в тусовку"
 def start_party(event):
     text = "А я с вами! Познакомимся или повеселимся?"
     return make_response(text)
 
-# обход сценария - игра для компании
+# NEW обход сценария - игра для компании
 def start_team_game(event):
     game = start_game(event)
     return make_response(game)
 
+# NEW обход сценария - включает фоновую музыку по команде "создай атмосферу для знакомства"
 def create_atmosphere(event):
     bg_tts = bg_music()[1]
     text_1 = "Включаю музыку для вас."
