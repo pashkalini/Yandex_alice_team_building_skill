@@ -151,6 +151,22 @@ def another_activity(event):
     random_activity = [activity, game, theme]
     return random.choice(random_activity)
 
+# обход сценария - "включись в тусовку"
+def start_party(event):
+    text = "А я с вами! Познакомимся или повеселимся?"
+    return make_response(text)
+
+# обход сценария - игра для компании
+def start_team_game(event):
+    game = start_game(event)
+    return make_response(game)
+
+def create_atmosphere(event):
+    bg_tts = bg_music()[1]
+    text_1 = "Включаю музыку для вас."
+    text_2 = "Вас познакомить?"
+    return make_response(text_1, text_1 + bg_tts + text_2)
+
 # включает песню, которую знают все
 def play_music(event):
     text = "Включаю, эту песню вы точно знаете!"
@@ -176,7 +192,7 @@ def bg_music():
     tts_6 = "<speaker audio=\"dialogs-upload/9298f90d-da88-42dd-bafc-253e0505f2f6/79db73ad-67b1-4377-a7b3-b843a649c067.opus\">"
     bg_tts = [tts_1, tts_2, tts_3, tts_4, tts_5, tts_6]
     # выбираем 10 рандомных фоновых песен для чередования
-    bg = [text, random.choice(bg_tts), random.choice(bg_tts), random.choice(bg_tts), random.choice(bg_tts), random.choice(bg_tts), \
+    bg = [text + "\n\n 🎶 воспроизводится музыка", random.choice(bg_tts), random.choice(bg_tts), random.choice(bg_tts), random.choice(bg_tts), random.choice(bg_tts), \
           random.choice(bg_tts), random.choice(bg_tts), random.choice(bg_tts), random.choice(bg_tts), random.choice(bg_tts)]
     return bg
 
@@ -211,6 +227,12 @@ def handler(event, context):
     elif 'play_music' in intents:
         msg = play_music(event)
         return msg
+    elif 'start_party' in intents:
+        return start_party(event)
+    elif 'start_team_game' in intents:
+        return start_team_game(event)
+    elif 'create_atmosphere' in intents:
+        return create_atmosphere(event)
     # elif 'repeat_message' in intents:
     #     repeat_message
     else:
